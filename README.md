@@ -1,57 +1,45 @@
-# Gemini-OpenAI-Proxy
+# 本项目的改进
 
-Gemini-OpenAI-Proxy is a proxy designed to convert the OpenAI API protocol to the Google Gemini Pro protocol. This enables seamless integration of OpenAI-powered functionalities into applications using the Gemini Pro protocol.
+### 功能
 
----
+处理来自 Gemini-OpenAI-Proxy 的响应的方式与处理来自 OpenAI 的响应的方式相同。
 
-## Table of Contents
+现在，您的应用程序可以通过 Gemini-OpenAI-Proxy 利用 OpenAI 功能，从而弥合 OpenAI 与使用 Google Gemini Pro 协议的应用程序之间的差距。
 
-- [Gemini-OpenAI-Proxy](#gemini-openai-proxy)
-  - [Table of Contents](#table-of-contents)
-  - [Build](#build)
-  - [Deploy](#deploy)
-  - [Usage](#usage)
-  - [Compatibility](#compatibility)
-  - [License](#license)
 
----
+### 模型映射
 
-## Build
+| GPT Model            | Gemini Model                 |
+|----------------------|------------------------------|
+| gpt-4o               | gemini-1.0-pro-vision-latest |
+| gpt-4-vision-preview | gemini-1.0-pro-vision-latest |
+| gpt-4*               | gemini-1.5-pro-latest        |
+| gpt-3.5*             | gemini-1.0-pro-latest        |
 
-To build the Gemini-OpenAI-Proxy, follow these steps:
+
+### 特殊修改
+
++ 如果要将 `gpt-4o` 映射到 gemini-1.5 flash-latest，可以配置环境变量 `GPT_4o=gemini-1.5-flash-latest`
+
++ 如果要将 `gpt-4-vision-preview` 映射到 gemini-1.5 pro-latest，可以配置环境变量 `GPT_4_VISION_PREVIEW=gemini-1.5-pro-latest`
+
+
+# 部署和实例(来自[zhu327](https://github.com/zhu327/gemini-openai-proxy))
+
+### 部署
+
+使用 Docker 部署 Gemini-OpenAI-Proxy，以便轻松完成设置。请按照以下步骤使用 Docker 进行部署：
 
 ```bash
-go build -o gemini main.go
+docker run --restart=always -it -d -p 8080:8080 --name gemini yilee01/gemini-openai-proxy:latest
 ```
 
----
+根据需要调整端口映射（例如 `-p 8080:8080`），并确保 Docker 镜像版本（`yilee01/gemini-openai-proxy:latest`）符合您的要求。
 
-## Deploy
 
-We recommend deploying Gemini-OpenAI-Proxy using Docker for a straightforward setup. Follow these steps to deploy with Docker:
+### 代理集成
 
-```bash
-docker run --restart=always -it -d -p 8080:8080 --name gemini zhu327/gemini-openai-proxy:latest
-```
-
-Adjust the port mapping (e.g., `-p 8080:8080`) as needed, and ensure that the Docker image version (`zhu327/gemini-openai-proxy:latest`) aligns with your requirements.
-
----
-
-## Usage
-
-Gemini-OpenAI-Proxy offers a straightforward way to integrate OpenAI functionalities into any application that supports custom OpenAI API endpoints. Follow these steps to leverage the capabilities of this proxy:
-
-1. **Set Up OpenAI Endpoint:**
-   Ensure your application is configured to use a custom OpenAI API endpoint. Gemini-OpenAI-Proxy seamlessly works with any OpenAI-compatible endpoint.
-
-2. **Get Google AI Studio API Key:**
-   Before using the proxy, you'll need to obtain an API key from [ai.google.dev](https://ai.google.dev). Treat this API key as your OpenAI API key when interacting with Gemini-OpenAI-Proxy.
-
-3. **Integrate the Proxy into Your Application:**
-   Modify your application's API requests to target the Gemini-OpenAI-Proxy, providing the acquired Google AI Studio API key as if it were your OpenAI API key.
-
-   Example API Request (Assuming the proxy is hosted at `http://localhost:8080`):
++ 示例 API 请求(假设代理部署在 `http://localhost:8080`):
    ```bash
    curl http://localhost:8080/v1/chat/completions \
     -H "Content-Type: application/json" \
@@ -63,7 +51,7 @@ Gemini-OpenAI-Proxy offers a straightforward way to integrate OpenAI functionali
     }'
    ```
 
-   Alternatively, use Gemini Pro Vision:
++ 使用 Gemini Pro Vision:
 
    ```bash
    curl http://localhost:8080/v1/chat/completions \
@@ -84,7 +72,7 @@ Gemini-OpenAI-Proxy offers a straightforward way to integrate OpenAI functionali
     }'
    ```
 
-   If you already have access to the Gemini 1.5 Pro api, you can use:
++ 使用 Gemini 1.5 Pro:
 
    ```bash
    curl http://localhost:8080/v1/chat/completions \
@@ -97,27 +85,15 @@ Gemini-OpenAI-Proxy offers a straightforward way to integrate OpenAI functionali
     }'
    ```
 
-   Model Mapping:
 
-   | GPT Model | Gemini Model |
-   |---|---|
-   | gpt-3.5-turbo | gemini-1.0-pro-latest |
-   | gpt-4 | gemini-1.5-flash-latest |
-   | gpt-4-turbo-preview | gemini-1.5-pro-latest |
-   | gpt-4-vision-preview | gemini-1.0-pro-vision-latest |
+### 普通构建
 
-   If you wish to map `gpt-4-vision-preview` to `gemini-1.5-pro-latest`, you can configure the environment variable `GPT_4_VISION_PREVIEW = gemini-1.5-pro-latest`. This is because `gemini-1.5-pro-latest` now also supports multi-modal data.
+构建 Gemini-OpenAI-Proxy：
 
-4. **Handle Responses:**
-   Process the responses from the Gemini-OpenAI-Proxy in the same way you would handle responses from OpenAI.
+```bash
+go build -o gemini main.go
+```
 
-Now, your application is equipped to leverage OpenAI functionality through the Gemini-OpenAI-Proxy, bridging the gap between OpenAI and applications using the Google Gemini Pro protocol.
-
-## Compatibility
-
-- <https://github.com/zhu327/gemini-openai-proxy/issues/4>
-
----
 
 ## License
 

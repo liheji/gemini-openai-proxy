@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/zhu327/gemini-openai-proxy/api"
+	"github.com/liheji/gemini-openai-proxy/api"
 )
 
 func main() {

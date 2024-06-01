@@ -13,7 +13,7 @@ import (
 	openai "github.com/sashabaranov/go-openai"
 	"google.golang.org/api/iterator"
 
-	"github.com/zhu327/gemini-openai-proxy/pkg/util"
+	"github.com/liheji/gemini-openai-proxy/pkg/util"
 )
 
 const (

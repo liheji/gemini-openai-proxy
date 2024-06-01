@@ -11,7 +11,7 @@ import (
 	openai "github.com/sashabaranov/go-openai"
 	"google.golang.org/api/option"
 
-	"github.com/zhu327/gemini-openai-proxy/pkg/adapter"
+	"github.com/liheji/gemini-openai-proxy/pkg/adapter"
 )
 
 func IndexHandler(c *gin.Context) {
